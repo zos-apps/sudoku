@@ -39,7 +39,27 @@
       "Pencil marks",
       "Hints",
       "Timer"
-    ]
+    ],
+    "screenshots": {
+      "hero": "screenshots/hero.png",
+      "images": [
+        "screenshots/1-main.png",
+        "screenshots/2-feature.png"
+      ]
+    },
+    "downloads": {
+      "web": "https://zos-apps.github.io/sudoku"
+    },
+    "featured": false,
+    "tags": [
+      "games",
+      "fun",
+      "entertainment",
+      "sudoku"
+    ],
+    "releaseDate": "2024-12-28",
+    "support": "https://github.com/zos-apps/sudoku/issues",
+    "changelog": "https://github.com/zos-apps/sudoku/releases"
   },
   "scripts": {
     "build": "tsup",
