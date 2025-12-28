@@ -20,7 +20,26 @@
         "height": 550
       },
       "resizable": true
-    }
+    },
+    "about": "Classic number puzzle game with multiple difficulty levels.",
+    "help": [
+      "Click cell to select",
+      "Enter number",
+      "Use pencil for notes"
+    ],
+    "docs": "https://zos-apps.github.io/sudoku",
+    "site": "https://github.com/zos-apps/sudoku",
+    "shortcuts": [
+      "1-9 Enter number",
+      "Delete Clear",
+      "H Hint"
+    ],
+    "features": [
+      "Multiple difficulties",
+      "Pencil marks",
+      "Hints",
+      "Timer"
+    ]
   },
   "scripts": {
     "build": "tsup",
@@ -53,5 +72,13 @@
     "sudoku",
     "macos",
     "desktop"
-  ]
+  ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/zos-apps"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }
