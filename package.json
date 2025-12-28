@@ -1,0 +1,20 @@
+{
+  "name": "@anthropic/sudoku",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "zos": {
+    "id": "ai.hanzo.sudoku",
+    "name": "Sudoku",
+    "icon": "🔢",
+    "category": "games",
+    "description": "Classic number puzzle",
+    "permissions": ["storage.local"],
+    "window": { "defaultSize": { "width": 450, "height": 550 }, "resizable": true }
+  },
+  "scripts": { "build": "tsup", "dev": "tsup --watch" },
+  "peerDependencies": { "react": "^18.0.0", "react-dom": "^18.0.0" },
+  "devDependencies": { "@types/react": "^18.3.0", "@types/react-dom": "^18.3.0", "tsup": "^8.3.5", "typescript": "^5.7.2" }
+}
