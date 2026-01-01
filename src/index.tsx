@@ -1,6 +1,6 @@
-import React, { useState, useCallback, useEffect } from 'react';
-
-interface SudokuProps { onClose: () => void; }
+import { useState, useCallback, useEffect } from 'react';
+import type { AppProps } from '@zos-apps/config';
+import { useLocalStorage, useKeyboard } from '@zos-apps/config';
 
 type Grid = (number | null)[][];
 
@@ -16,11 +16,34 @@ const SAMPLE_PUZZLE: Grid = [
   [null,null,null,null,8,null,null,7,9],
 ];
 
-const Sudoku: React.FC<SudokuProps> = ({ onClose }) => {
-  const [grid, setGrid] = useState<Grid>(SAMPLE_PUZZLE.map(r => [...r]));
-  const [original, setOriginal] = useState<Grid>(SAMPLE_PUZZLE.map(r => [...r]));
+interface SudokuState {
+  grid: Grid;
+  original: Grid;
+}
+
+const Sudoku: React.FC<AppProps> = ({ onClose: _onClose }) => {
+  const [gameState, setGameState] = useLocalStorage<SudokuState>('sudoku-game', {
+    grid: SAMPLE_PUZZLE.map(r => [...r]),
+    original: SAMPLE_PUZZLE.map(r => [...r]),
+  });
+  const { grid, original } = gameState;
+  const setGrid = (newGrid: Grid) => setGameState(s => ({ ...s, grid: newGrid }));
   const [selected, setSelected] = useState<[number, number] | null>(null);
   const [errors, setErrors] = useState<Set<string>>(new Set());
+
+  // Keyboard input for numbers
+  useKeyboard({
+    '1': '1', '2': '2', '3': '3', '4': '4', '5': '5',
+    '6': '6', '7': '7', '8': '8', '9': '9',
+    'Backspace': 'clear', 'Delete': 'clear',
+  }, (action) => {
+    if (!selected) return;
+    const [r, c] = selected;
+    if (original[r][c] !== null) return;
+    const newGrid = grid.map(row => [...row]);
+    newGrid[r][c] = action === 'clear' ? null : parseInt(action, 10);
+    setGrid(newGrid);
+  }, { enabled: selected !== null });
 
   const isValid = useCallback((grid: Grid, row: number, col: number, num: number) => {
     for (let i = 0; i < 9; i++) if (i !== col && grid[row][i] === num) return false;
@@ -53,8 +76,10 @@ const Sudoku: React.FC<SudokuProps> = ({ onClose }) => {
   };
 
   const newGame = () => {
-    setGrid(SAMPLE_PUZZLE.map(r => [...r]));
-    setOriginal(SAMPLE_PUZZLE.map(r => [...r]));
+    setGameState({
+      grid: SAMPLE_PUZZLE.map(r => [...r]),
+      original: SAMPLE_PUZZLE.map(r => [...r]),
+    });
     setSelected(null);
     setErrors(new Set());
   };
